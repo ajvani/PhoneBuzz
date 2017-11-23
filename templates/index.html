@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>PhoneBuzz</title>        
+        <link rel="stylesheet" href="../static/css/styles.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="../static/js/main.js"></script>
+    </head>
+
+    <body>
+        <div class="topbar">
+            <h1 class="title">PhoneBuzz</h1>
+        </div>
+        
+        <div class="divider"></div>
+
+        <div class="container flex-row">
+            <div class="container button opt active-btn">Send Call</div>
+            <div class="container button opt">Receive Call</div>
+            <div class="container button opt">Call History</div>
+        </div>
+
+        <div class="container page" id="send_call">
+            <h3>Call and Play FizzBuzz!</h3>
+            <div class="title-div"></div>
+            <div class="container button long-button">Call xxx-xxx-xxxx</div>
+        </div>
+
+        <div class="container page" style="display: none" id="receive_call">
+            <h3>Receive a Call and Play FizzBuzz!</h3>
+            <div class="title-div"></div>
+            <form action="null" class="container">
+                <label for="phone_number">Please Enter Your Number</label>
+                <input type="text" id="phone_number" class="input-field" placeholder="xxx-xxx-xxxx"> 
+                <label for="delay">Enter a Delay (Default: 0)</label>
+                <input type="text" id="delay" class="input-field" placeholder="0"> 
+                <div class="container button long-button">Receive Call</div>
+            </form>
+        </div>
+
+        <div class="container page" style="display: none" id="call_history">
+            <h3>Call History</h3>
+            <div class="title-div"></div>
+            <div class="table-container"> 
+            <table class="history-table">
+                <tr>
+                    <th>Time of call</th>
+                    <th>Number Used</th>
+                    <th>Delay Used</th>
+                    <th>Replay</th>
+                </tr>            
+                <tr>
+                    <td>18</td>
+                    <td>xxx-xxx-xxxx</td>
+                    <td>3s</td>
+                    <td><div class="container button replay-button"> &#9658;</div></td>
+                </tr>
+            </table>
+            </div>
+        </div>
+    </body>
+</html>
+
