@@ -1,6 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
+@keyframes fade {
+    from {
+        opacity: 0; 
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 body {
+    animation: fade 1s forwards linear; 
     font-family: 'Montserrat', sans-serif; 
     margin: 0;
     background: #D3CCE3;  /* fallback for old browsers */
@@ -31,7 +41,7 @@ label {
 .title-div {
     height: 1px; 
     background-color: grey; 
-    width: 50%; 
+    width: 40%; 
     margin: 0 auto; 
     margin-bottom: 10px;
 }
@@ -105,9 +115,21 @@ label {
     height: 20px; 
     padding: 10px;
     margin: 10px;  
-    border: 1px solid grey; 
+    border: 2px solid grey; 
     border-radius: 5px; 
-    transition-duration: 0.3s;
+    transition-duration: 0.5s;
+}
+
+.input-field:focus {
+    outline: none; 
+}
+
+#delay {
+    border-color: #0db71c; 
+}
+
+#phone_number {
+    border-color: #b70e0e; 
 }
 
 ::-webkit-input-placeholder { 
