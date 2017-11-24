@@ -4,17 +4,12 @@ app: PhoneBuzz
 '''
 
 import os
+import env
 from twilio.twiml.voice_response import Gather, VoiceResponse, Say
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, render_template, request
 
-
 app = Flask(__name__)
-
-AUTH = 'a2a708676deac4f28ffeb80e95f1f6ed'
-API_SID = 'AC4ceadba58ab2c36ef383a085feb46d72'
-
-
 
 @app.route('/')
 def homepage():
@@ -41,11 +36,9 @@ def say_fizzbuzz():
 def handle_incoming(methods=['GET']):
     response = VoiceResponse()
 
-    gather = Gather(method='GET')
+    gather = Gather(action='/say_fizzbuzz', method='POST')
 
-    gather.say('Enter the upper bound for fizzbuzz, followed by the pound symbol',\
-            action='/say_fizzbuzz', method='POST')
-
+    gather.say('Enter the upper bound for fizzbuzz, followed by the pound symbol')
 
     response.append(gather)
     response.say('Thank you for using PhoneBuzz')

@@ -18,7 +18,7 @@ $(document).ready(function() {
     $('#phone_number').on('input', function() {
         var re = /^[0-9]{10}|\([0-9]{3}\) ?[0-9]{3}-[0-9]{4}|[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
 
-        if ($(this).val().match(re)) {
+        if ($(this).val().match(re) == $(this).val()) {
             $(this).css('border-color', '#0db71c');
         } else {
             $(this).css('border-color', '#b70e0e'); 
