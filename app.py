@@ -16,10 +16,9 @@ def homepage():
     return render_template('index.html')
 
 
-@app.route('/say_fizzbuzz')
+@app.route('/say_fizzbuzz', methods=['GET', 'POST'])
 def say_fizzbuzz():
-    print('running')
-    n = request.values.get('Digits', None)
+    n = int(request.values.get('Digits', None))
 
     response = VoiceResponse()
 
@@ -32,8 +31,8 @@ def say_fizzbuzz():
     print(str(response))
     return str(response)
 
-@app.route('/handle_incoming')
-def handle_incoming(methods=['GET']):
+@app.route('/handle_incoming', methods=['GET','POST'])
+def handle_incoming():
     response = VoiceResponse()
 
     gather = Gather(action='/say_fizzbuzz', method='POST')
