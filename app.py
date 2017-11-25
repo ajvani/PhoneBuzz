@@ -47,6 +47,7 @@ def handle_incoming(methods=['GET']):
     print(str(request.values))
     print(str(request.values.keys()))
     print(str(request.values.values()))
+    print(str(request.values.get('Digits', None)))
     
     return str(response)
 
