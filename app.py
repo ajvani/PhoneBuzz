@@ -46,6 +46,7 @@ def handle_incoming():
 
 @app.route('/handle_outgoing', methods=['GET', 'POST'])
 def handle_outgoing(): 
+
     delay = int(request.values.get('delay', 0))
     number = request.values.get('phone_number', None)
 
@@ -53,12 +54,12 @@ def handle_outgoing():
     time.sleep(delay)
 
     client = Client(ACC_SID, AUTH_TOK)
-    rscm = 'https://127.0.0.1/handle_db_update'
+    rscm = 'https://infinite-oasis-27020.herokuapp.com/handle_db_update'
 
     call = client.calls.create(
         to=number,
         from_='+12013406597', 
-        url='https://127.0.0.1/handle_incoming',
+        url='https://infinite-oasis-27020.herokuapp.com/handle_incoming',
         record=True,
         recording_status_callback=rscm
     )
