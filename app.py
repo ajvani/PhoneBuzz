@@ -46,6 +46,8 @@ def handle_incoming():
 
 @app.route('/handle_outgoing', methods=['GET', 'POST'])
 def handle_outgoing(): 
+    ACC_SID = os.environ['ACC_SID']
+    AUTH_TOK = os.environ['AUTH_TOK']
 
     delay = int(request.values.get('delay', 0))
     number = request.values.get('phone_number', None)
