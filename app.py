@@ -13,6 +13,7 @@ from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
 
+# initial db setup on server start
 conn = sqlite3.connect('./database.db')
 schema = 'CREATE TABLE IF NOT EXISTS calls (time TEXT, number TEXT, delay TEXT, rurl TEXT)'
 conn.execute(schema)
@@ -20,6 +21,7 @@ conn.close()
 
 @app.route('/')
 def homepage():
+    # passing db to homepage values
     con = sqlite3.connect('./database.db')
     cur = con.cursor()
     calls = cur.execute('SELECT * FROM calls').fetchall()
@@ -27,10 +29,10 @@ def homepage():
     return render_template('index.html', calls=calls)
 
 
+# fizzbuzz implementation
 @app.route('/say_fizzbuzz', methods=['GET', 'POST'])
 def say_fizzbuzz():
     n = int(request.values.get('Digits', None))
-
     response = VoiceResponse()
 
     msg = " , ".join(["FizzBuzz" if x % 3 == 0 and x % 5 == 0 else\
@@ -41,6 +43,7 @@ def say_fizzbuzz():
 
     return str(response)
 
+# handling incoming call 
 @app.route('/handle_incoming', methods=['GET','POST'])
 def handle_incoming():
     response = VoiceResponse()
@@ -54,10 +57,12 @@ def handle_incoming():
 
     return str(response)
 
+# handling outgoing call
 @app.route('/handle_outgoing', methods=['GET', 'POST'])
 def handle_outgoing(): 
     ACC_SID = os.environ['ACC_SID']
     AUTH_TOK = os.environ['AUTH_TOK']
+    BASE_URL = os.environ['BASE_URL']
 
     delay = int(request.values.get('delay', 0))
     number = request.values.get('phone_number', None)
@@ -66,21 +71,21 @@ def handle_outgoing():
     time.sleep(delay)
 
     client = Client(ACC_SID, AUTH_TOK)
-    rscm = 'https://infinite-oasis-27020.herokuapp.com/handle_db_update?delay=' +\
-                str(delay) + '&number=' + number
 
-    print(rscm)
+    rscm = BASE_URL + '/handle_db_update?delay=' + str(delay) + '&number=' + number
+    url = BASE_URL + '/handle_incoming'
 
     call = client.calls.create(
         to=number,
         from_='+12013406597', 
-        url='https://infinite-oasis-27020.herokuapp.com/handle_incoming',
+        url=url,
         record=True,
         recording_status_callback=rscm
     )
 
     return redirect('/')
 
+# updates db when needed
 @app.route('/handle_db_update', methods=['GET', 'POST'])
 def handle_db_update(): 
     rec_url = request.values.get('RecordingUrl', None)
