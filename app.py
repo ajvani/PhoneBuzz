@@ -5,16 +5,26 @@ app: PhoneBuzz
 
 import os
 import time
+import datetime
+import sqlite3
 from twilio.twiml.voice_response import Gather, VoiceResponse, Say
 from twilio.rest import Client
-from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
 
+conn = sqlite3.connect('./database.db')
+schema = 'CREATE TABLE IF NOT EXISTS calls (time TEXT, number TEXT, delay TEXT, rurl TEXT)'
+conn.execute(schema)
+conn.close()
+
 @app.route('/')
 def homepage():
-    return render_template('index.html')
+    con = sqlite3.connect('./database.db')
+    cur = con.cursor()
+    calls = cur.execute('SELECT * FROM calls').fetchall()
+
+    return render_template('index.html', calls=calls)
 
 
 @app.route('/say_fizzbuzz', methods=['GET', 'POST'])
@@ -23,9 +33,9 @@ def say_fizzbuzz():
 
     response = VoiceResponse()
 
-    msg = "........".join(["FizzBuzz" if x % 3 == 0 and x % 5 == 0 else\
+    msg = " , ".join(["FizzBuzz" if x % 3 == 0 and x % 5 == 0 else\
             "Fizz" if x % 3 == 0 else "Buzz" if x % 5 == 0 else str(x)\
-            for x in range(1, n)]) + "................. End Fizzbuzz"
+            for x in range(1, n)]) + " , End Fizzbuzz"
 
     response.say(msg)
 
@@ -56,7 +66,10 @@ def handle_outgoing():
     time.sleep(delay)
 
     client = Client(ACC_SID, AUTH_TOK)
-    rscm = 'https://infinite-oasis-27020.herokuapp.com/handle_db_update'
+    rscm = 'https://infinite-oasis-27020.herokuapp.com/handle_db_update?delay=' +\
+                str(delay) + '&number=' + number
+
+    print(rscm)
 
     call = client.calls.create(
         to=number,
@@ -70,9 +83,26 @@ def handle_outgoing():
 
 @app.route('/handle_db_update', methods=['GET', 'POST'])
 def handle_db_update(): 
-    print(request.values)
+    rec_url = request.values.get('RecordingUrl', None)
+    number = request.values.get('number', None)
+    delay = request.values.get('delay', None)
 
-    return "none"
+    time = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
+
+    print('adding to db')
+
+    con = sqlite3.connect('database.db')
+
+    try:
+        cur = con.cursor()
+        cur.execute('INSERT INTO calls (time, number, delay, rurl) VALUES (?,?,?,?)',\
+                (time, number, delay, rec_url))
+        con.commit()
+    except:
+        sqlite3.connect('database.db').rollback()
+        print('Error: Could not insert into DB')
+
+    return redirect('/') 
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

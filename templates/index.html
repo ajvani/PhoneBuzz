@@ -51,12 +51,14 @@
                     <th>Delay Used</th>
                     <th>Replay</th>
                 </tr>            
+                {% for row in calls %}
                 <tr>
-                    <td>18</td>
-                    <td>xxx-xxx-xxxx</td>
-                    <td>3s</td>
-                    <td><div class="container button replay-button"> &#9658;</div></td>
+                    <td>{% print row[0] %}</td>
+                    <td>{% print row[1] %}</td>
+                    <td>{% print row[2] %} s</td>
+                    <td><a href="{% print row[3] %}"><div class="container button replay-button"> &#9658;</div></a></td>
                 </tr>
+                {% endfor %}
             </table>
             </div>
         </div>
