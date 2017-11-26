@@ -23,19 +23,21 @@
         <div class="container page" id="send_call">
             <h3>Call and Play FizzBuzz!</h3>
             <div class="title-div"></div>
-            <a href="tel:3012311851"><div class="container button long-button">Call (201) 340-6597</div></a>
+            <a href="tel:3012311851"><button class="container button long-button">Call (201) 340-6597</button></a>
+            
         </div>
 
         <div class="container page" style="display: none" id="receive_call">
             <h3>Receive a Call and Play FizzBuzz!</h3>
             <div class="title-div"></div>
-            <form action="null" class="container">
+            <form id="receive_form" class="container">
                 <label for="phone_number">Please Enter Your Number</label>
-                <input type="text" id="phone_number" class="input-field" value="" placeholder="xxx-xxx-xxxx"> 
+                <input type="text" id="phone_number" class="input-field invalid-button" value="" placeholder="xxx-xxx-xxxx"> 
                 <label for="delay">Enter a Delay (Default: 0)</label>
-                <input type="text" id="delay" class="input-field" placeholder="0"> 
-                <div class="container button long-button">Receive Call</div>
+                <input type="text" id="delay" class="input-field valid-button" placeholder="0"> 
+                <button id="receive_button" class="container button long-button disabled-button" type="submit">Receive Call</button>
             </form>
+            <h3 id="success_message" style="display: none">Call sent.</h3>
         </div>
 
         <div class="container page" style="display: none" id="call_history">
