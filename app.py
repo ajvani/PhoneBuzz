@@ -67,6 +67,11 @@ def handle_outgoing():
     delay = int(request.values.get('delay', 0))
     number = request.values.get('phone_number', None)
 
+    rgx = '^[0-9]{10}|\([0-9]{3}\) ?[0-9]{3}-[0-9]{4}|[0-9]{3}-[0-9]{3}-[0-9]{4}$'
+    
+    if re.search(rgx, number) == None:
+        return redirect('/')
+
     # putting time delay
     time.sleep(delay)
 
