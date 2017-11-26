@@ -10,7 +10,7 @@ a call.
 Previous received calls are stored in a database. 
 
 ### Built With
-- Backend: Flask
+- Backend: Flask (Python), Twilio API
 - Frontend: HTML/CSS/JS/JQuery
 
 ### Setup
@@ -18,12 +18,17 @@ Previous received calls are stored in a database.
 ```
 pip install -r requirements.txt
 ```
+
 - Setup Environment Variables:
 ```
 export ACC_SID="<Your_Twilio_SID>"
 export AUTH_TOK="<Your_Twilio_AUTH_TOK>"
 export BASE_URL="<URL_for_hosting>"
 ```
+
+- Setup HTML GET request WebHook for incoming calls in Twilio Console:
+![Web Hook Example](./static/images/WebHookExample.png)
+
 - Setup Flask App: 
 ```
 export FLASK_APP=app.py
@@ -33,4 +38,3 @@ export FLASK_APP=app.py
 ```
 flask run
 ```
-
