@@ -94,8 +94,6 @@ def handle_db_update():
 
     time = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
 
-    print('adding to db')
-
     con = sqlite3.connect('database.db')
 
     try:
