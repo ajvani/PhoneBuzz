@@ -86,7 +86,7 @@ def handle_outgoing():
 
     rgx = '^[0-9]{10}|\([0-9]{3}\) ?[0-9]{3}-[0-9]{4}|[0-9]{3}-[0-9]{3}-[0-9]{4}$'
     
-    if number == None or re.search(rgx, number) == None:
+    if number == None or type(number) is not str or re.search(rgx, number) == None:
         return redirect('/')
 
     # putting time delay
