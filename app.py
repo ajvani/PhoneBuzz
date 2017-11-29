@@ -31,9 +31,15 @@ def homepage():
 
 
 # fizzbuzz implementation
-@app.route('/say_fizzbuzz', methods=['GET', 'POST'])
+@app.route('/say_fizzbuzz', methods=['POST'])
 def say_fizzbuzz():
-    n = int(request.values.get('Digits', None))
+    n = request.values.get('Digits', None)
+    
+    if n == None:
+        n = 0
+    else:
+        n = int(n) 
+
     response = VoiceResponse()
 
     msg = " , ".join(["FizzBuzz" if x % 3 == 0 and x % 5 == 0 else\
@@ -45,7 +51,7 @@ def say_fizzbuzz():
     return str(response)
 
 # handling incoming call 
-@app.route('/handle_incoming', methods=['GET','POST'])
+@app.route('/handle_incoming', methods=['GET', 'POST'])
 def handle_incoming():
     response = VoiceResponse()
 
@@ -59,7 +65,7 @@ def handle_incoming():
     return str(response)
 
 # handling outgoing call
-@app.route('/handle_outgoing', methods=['GET', 'POST'])
+@app.route('/handle_outgoing', methods=['POST'])
 def handle_outgoing(): 
     ACC_SID = os.environ['ACC_SID']
     AUTH_TOK = os.environ['AUTH_TOK']
@@ -70,7 +76,7 @@ def handle_outgoing():
 
     rgx = '^[0-9]{10}|\([0-9]{3}\) ?[0-9]{3}-[0-9]{4}|[0-9]{3}-[0-9]{3}-[0-9]{4}$'
     
-    if re.search(rgx, number) == None:
+    if number == None or re.search(rgx, number) == None:
         return redirect('/')
 
     # putting time delay
@@ -92,7 +98,7 @@ def handle_outgoing():
     return redirect('/')
 
 # updates db when needed
-@app.route('/handle_db_update', methods=['GET', 'POST'])
+@app.route('/handle_db_update', methods=['POST'])
 def handle_db_update(): 
     rec_url = request.values.get('RecordingUrl', None)
     number = request.values.get('number', None)
