@@ -34,24 +34,31 @@ def homepage():
 @app.route('/say_fizzbuzz', methods=['POST'])
 def say_fizzbuzz():
     n = request.values.get('Digits', None)
+
+    msg = "" 
     
     if n == None or not n.isdigit():
         n = 0
+        msg = "Invalid Input, Please enter a number"
     else:
         n = int(n) 
 
     response = VoiceResponse()
 
-    msg = " , ".join(["FizzBuzz" if x % 3 == 0 and x % 5 == 0 else\
-            "Fizz" if x % 3 == 0 else "Buzz" if x % 5 == 0 else str(x)\
-            for x in range(1, n)]) + " , End Fizzbuzz"
+
+    if n > 500:
+        msg = "This is a very large number, we cannot process your request."
+    else:
+        msg = " , ".join(["FizzBuzz" if x % 3 == 0 and x % 5 == 0 else\
+                "Fizz" if x % 3 == 0 else "Buzz" if x % 5 == 0 else str(x)\
+                for x in range(1, n)]) + " , End Fizzbuzz"
 
     response.say(msg)
 
     return str(response)
 
 # handling incoming call 
-@app.route('/handle_incoming', methods=['GET', 'POST'])
+@app.route('/handle_incoming', methods=['GET'])
 def handle_incoming():
     response = VoiceResponse()
 
@@ -70,6 +77,7 @@ def handle_outgoing():
     ACC_SID = os.environ['ACC_SID']
     AUTH_TOK = os.environ['AUTH_TOK']
     BASE_URL = os.environ['BASE_URL']
+    TWIL_NUM = os.environ['TWIL_NUM']
 
     delay = int(request.values.get('delay', 0))
     number = request.values.get('phone_number', None)
@@ -89,7 +97,7 @@ def handle_outgoing():
 
     call = client.calls.create(
         to=number,
-        from_='+12013406597', 
+        from_=TWIL_NUM, 
         url=url,
         record=True,
         recording_status_callback=rscm

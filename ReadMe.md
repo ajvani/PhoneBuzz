@@ -23,6 +23,7 @@ pip install -r requirements.txt
 ```
 export ACC_SID="<Your_Twilio_SID>"
 export AUTH_TOK="<Your_Twilio_AUTH_TOK>"
+export TWIL_NUM="<Your_Twilio_Number>"
 export BASE_URL="<URL_for_hosting>"
 ```
 
