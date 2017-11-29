@@ -4,8 +4,7 @@ https://infinite-oasis-27020.herokuapp.com/
 ### About
 PhoneBuzz is a twist of the well-known FizzBuzz. 
 
-Users can either send a call to play FizzBuzz, or they can receive
-a call. 
+Users can either send or receive a call to play FizzBuzz.
 
 Previous received calls are stored in a database. 
 

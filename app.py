@@ -36,8 +36,10 @@ def say_fizzbuzz():
     n = request.values.get('Digits', None)
 
     msg = "" 
-    
-    if n == None or not n.isdigit():
+
+    if n == None or (type(n) is not int and type(n) is not str)\
+            or (type(n) is str and not n.isdigit()):
+
         n = 0
         msg = "Invalid Input, Please enter a number"
     else:
