@@ -35,7 +35,7 @@ def homepage():
 def say_fizzbuzz():
     n = request.values.get('Digits', None)
     
-    if n == None:
+    if n == None or not n.isdigit():
         n = 0
     else:
         n = int(n) 
