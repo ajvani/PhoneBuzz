@@ -60,7 +60,7 @@ def say_fizzbuzz():
     return str(response)
 
 # handling incoming call 
-@app.route('/handle_incoming', methods=['GET'])
+@app.route('/handle_incoming', methods=['GET', 'POST'])
 def handle_incoming():
     response = VoiceResponse()
 
