@@ -107,10 +107,8 @@ def handle_outgoing():
         )
 
     except:
-        response = VoiceResponse()
-        response.say("Sorry, we could not process your request because your\
+        print("Sorry, we could not process your request because your\
                 number isn't verified.")
-        return str(response)
 
     return redirect('/')
 
