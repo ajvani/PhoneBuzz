@@ -97,13 +97,20 @@ def handle_outgoing():
     rscm = BASE_URL + '/handle_db_update?delay=' + str(delay) + '&number=' + number
     url = BASE_URL + '/handle_incoming'
 
-    call = client.calls.create(
-        to=number,
-        from_=TWIL_NUM, 
-        url=url,
-        record=True,
-        recording_status_callback=rscm
-    )
+    try:
+        call = client.calls.create(
+            to=number,
+            from_=TWIL_NUM, 
+            url=url,
+            record=True,
+            recording_status_callback=rscm
+        )
+
+    except:
+        response = VoiceResponse()
+        response.say("Sorry, we could not process your request because your\
+                number isn't verified.")
+        return str(response)
 
     return redirect('/')
 
